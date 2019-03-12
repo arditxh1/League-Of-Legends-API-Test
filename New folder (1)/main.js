@@ -3,40 +3,38 @@ var urlMatch = 'https://api.pandascore.co/lol/matches/upcoming?token=zFKIBdhrdQZ
 var vdata;
 var gData;
 var nEvents
-var url1 = "https://api.pandascore.co/lol/matches/upcoming?filter[tournament_id]="
+var url1 = "https://api.pandascore.co/lol/matches/upcoming?filter[league_id]="
 var url2 = "&token=zFKIBdhrdQZjTnSpUJtslUGbAvxTF9JanXZpFyhzBtYBaCx1kbI"
-var realUrl;
+var realUrl = '';
+var temp1;
 
 function getData(){
 	$.getJSON(url, function(data){
 		vdata = data;
 		nEvents = Object.keys(vdata).length
 		realUrl = url1 + vdata[0].id + url2
-
-for (var i = nEvents - 1; i >= 0; i--) {
-	console.log(i)
-	console.log(vdata[i].id)
-}
 		cloneEvents()
-	});
-
-	$.getJSON(urlMatch, function(data){
-		gData = data
-		gEvents = Object.keys(gData).length
-		cloneMatches()
+		getMatches()
 	});
 }
 
+function getMatches(){
+	$.getJSON(realUrl, function(dataM){
+	gData = dataM
+	gEvents = Object.keys(gData).length
+	cloneMatches()
+	});
+}
 
 function replaceDataEvents(){
-	for (var i = 0; i <= nEvents; i++) {
+	for (var i = 0; i <= nEvents - 1; i++) {
 		changeImg('#img' + i, vdata[i].image_url)
 		changeText('#name' + i, vdata[i].name)
 	};
 }
 
 function replaceDataMatches(){
-	for (var i = 0; i <= gEvents; i++) {
+	for (var i = 0; i <= gEvents - 1; i++) {
 			changeImg('#op0-' + i, gData[i].opponents[0].opponent.image_url)
 			changeImg('#op1-' + i, gData[i].opponents[1].opponent.image_url)
 			changeText('#op0t-' + i, gData[i].opponents[0].opponent.name)
@@ -50,7 +48,7 @@ function replaceDataMatches(){
 function cloneEvents(){
 	var num = 0
 	for (var i = nEvents; i > 0; i--) {
-		$(".main").clone().appendTo( ".events").attr("class", 'info').attr('id', num);
+		$(".main").clone(true).appendTo( ".events").attr("class", 'info').attr('id', num);
 		$("#"+num).children("#img1").attr( "id", "img"+num );
 		$("#"+num).find(".name").attr( "id", "name"+num );
 
@@ -62,7 +60,7 @@ function cloneEvents(){
 function cloneMatches(){
 	var numM = 0
 	for (var i = gEvents; i > 0; i--) {
-		$("#cloneM").clone().appendTo( ".matches").attr("class", 'games').attr('id', numM  + 'M');
+		$("#cloneM").clone(true).appendTo( ".matches").attr("class", 'games').attr('id', numM  + 'M');
 		$("#"+numM + 'M').children("#op0-img1").attr( "id", "op0-"+numM );
 		$("#"+numM + 'M').children("#op1-img1").attr( "id", "op1-"+numM );
 		$("#"+numM + 'M').children(".first-challanger-name").attr( "id", "op0t-"+numM );
@@ -81,4 +79,11 @@ function changeText(element,data){
 	$(element).text(data)
 }
 
+$(document).on('click', ".info", function(){
+	temp1 = parseInt(($(this).attr('id')))
+	realUrl = url1 + vdata[temp1].id + url2
+	getMatches()
+});
+
 getData()
+
