@@ -105,6 +105,18 @@ main .matches{
 	opacity: 1;
 }
 
+.active{
+	display: flex;
+	justify-content: flex-start;
+	padding: 12px;
+	padding-left: 50px;
+	border-top: 1px solid #292d31;
+	background-color: #000000;
+	border-right: 5px solid #5abbd4;
+	transition: .3s;
+	opacity: 1;
+}
+
 #information{
 	height: 50px;
 }

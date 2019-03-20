@@ -8,6 +8,9 @@ var url2 = "&token=zFKIBdhrdQZjTnSpUJtslUGbAvxTF9JanXZpFyhzBtYBaCx1kbI"
 var realUrl = '';
 var temp1;
 
+/*header('Access-Control-Allow-Origin: https://api.pandascore.co')
+header('Access-Control-Allow-Credentials: true')*/
+
 function getData(){
 	$.getJSON(url, function(data){
 		vdata = data;
@@ -70,7 +73,13 @@ function cloneMatches(){
 	}
 	replaceDataMatches()
 }
- 
+
+function removeOldMatches(){
+	for (var i = gEvents; i >= 0; i--) {
+		$("#"+ i + 'M').remove()
+	}
+}
+
 function changeImg(element,data){
 	$(element).attr('src',data)
 }
@@ -78,10 +87,20 @@ function changeImg(element,data){
 function changeText(element,data){
 	$(element).text(data)
 }
-
+var OldClick = '';
 $(document).on('click', ".info", function(){
+	if (OldClick == '') {
+		$(this).attr('class','active')
+		OldClick = $(this)
+	}else{
+		$(OldClick).attr('class','info')
+		$(this).attr('class','active')
+		OldClick = $(this)
+	}
+	
 	temp1 = parseInt(($(this).attr('id')))
 	realUrl = url1 + vdata[temp1].id + url2
+	removeOldMatches()
 	getMatches()
 });
 
