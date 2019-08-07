@@ -1,0 +1,65 @@
+ul{
+	margin: 0;
+	padding: 0;
+	padding-right: 55%;
+}
+
+ul li{
+	list-style-type: none;
+	padding: 10px;
+}
+
+nav ul li a{
+	text-decoration: none;
+	color: #555d64;
+	font-family: Roboto;
+	transition: 0.3s;
+}
+
+nav{
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	background-color: #000;
+}
+
+ul{
+	display: flex
+}
+
+body,html{
+	margin: 0;
+	padding: 0; 
+}
+
+nav button{
+	margin-right: 10px;
+}
+
+nav ul li a:hover{
+	color: #5abbd4;
+	padding-bottom: 5px;
+	border-bottom: solid 3px #5abbd4;
+	transition: 0.3s;
+}
+
+#home{
+	color: white;
+	border-bottom: solid 3px #5abbd4;
+	padding-bottom: 5px;
+}
+
+.champions{
+	display: flex;
+}
+
+* { padding: 0; margin: 0; }
+html, body, #fullheight {
+    min-height: 100% !important;
+    height: 100%;
+}
+
+main{
+	height: 100%;
+}
+
